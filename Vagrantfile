@@ -79,5 +79,9 @@ Vagrant.configure("2") do |config|
 
     echo "" >> /etc/postgresql/13/main/pg_hba.conf
     echo "host all all 192.168.1.0/24 trust" >> /etc/postgresql/13/main/pg_hba.conf
+	
+	sudo service postgresql restart
+	
+	sleep 5
   SHELL
 end
