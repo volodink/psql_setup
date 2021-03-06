@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
   #
   #   # Customize the amount of memory on the VM:
     vb.memory = "1024"
-    v.cpus = 2
+    vb.cpus = 2
   end
   #
   # View the documentation for the provider you are using for more
@@ -69,20 +69,21 @@ Vagrant.configure("2") do |config|
     apt-get dist-upgrade -y
     
     apt-get install -y wget ca-certificates
-      wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-      sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+    
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
 
     apt-get update
 
     apt-get install -y postgresql postgresql-contrib git curl htop mc tree
 
-    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/13/main/postgresql.conf
-
     echo "" >> /etc/postgresql/13/main/pg_hba.conf
     echo "host all all 192.168.1.0/24 trust" >> /etc/postgresql/13/main/pg_hba.conf
+    
+    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/13/main/postgresql.conf
+    
+    sudo service postgresql restart
 	
-	sudo service postgresql restart
-	
-	sleep 5
+    sleep 5
   SHELL
 end
